@@ -1,70 +1,47 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import {  Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import React from 'react'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import Card from '@/components/core/Dashboard/card'
+import Header from '@/components/common/header'
+import Transaction from '@/components/core/Dashboard/Transaction'
+import Icons from '@/constants/Icons'
+import { StatusBar } from 'expo-status-bar'
+import IncomeExpenseGroupChart, {} from '@/components/charts/IncomeExpenseGroupChart'
+import { router } from 'expo-router'
 
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-
-export default function HomeScreen() {
+const DashBoard = () => {
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: 'cmd + d', android: 'cmd + m' })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{' '}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
-  );
+    <SafeAreaView className='bg-[#1c2125]'>
+        <Header/>
+      <ScrollView className='  min-h-screen mb-48'>
+        <View className='bg-primary mt-40 min-h-full pb-52 rounded-t-3xl pt-32 relative'>
+        <View className='absolute -top-[100]'>
+          <Card />
+        </View>
+        <View className='justify-evenly flex-row my-4 items-center'>
+        <TouchableOpacity onPress={()=>router.push("add-transactions/")} activeOpacity={0.85}>
+          <View className='justify-center items-center bg-[#f2EBFE] rounded-3xl p-4 w-40  gap-2'>
+            <Image source={Icons.income} tintColor={'#8335F8'}/>
+            <Text className='font-psemibold'>Add Income</Text>
+          </View>
+          </TouchableOpacity>
+          <TouchableOpacity activeOpacity={0.85}>
+          <View className='justify-center items-center bg-[#FFEFEB] rounded-3xl p-4 w-40  gap-2'>
+            <Image source={Icons.expense} tintColor={'#FF6739'}/>
+            <Text className='font-pse`mibold'>Add Income</Text>
+          </View>
+          </TouchableOpacity>
+        </View>
+        <IncomeExpenseGroupChart/>
+          <Transaction/>
+        </View>
+      </ScrollView>
+      {/* <StatusBar style='light' /> */}
+    </SafeAreaView>
+    
+  )
 }
 
-const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
-  },
-});
+export default DashBoard
+
+const styles = StyleSheet.create({})
