@@ -1,13 +1,14 @@
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
+import { Redirect, router, Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
-import { Provider } from 'react-redux'
+import { Provider, useDispatch } from 'react-redux'
 import { useColorScheme } from '@/hooks/useColorScheme';
 import store from '@/redux/Store';
 import Toast from 'react-native-toast-message';
+import { getTokenFromLocalStorageThunk } from '@/redux/Reducers/UserSlice';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -31,20 +32,24 @@ export default function RootLayout() {
     if (loaded) {
       SplashScreen.hideAsync();
     }
+
   }, [loaded]);
 
   if (!loaded) {
     return null;
+    
   }
+
+  
 
   return (
     <Provider store={store}>
     <ThemeProvider  value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack initialRouteName='report'>
-        <Stack.Screen name="(tabs)"  options={{ headerShown: false, }} />
-        <Stack.Screen name="+not-found" />
-        {/* <Stack.Screen name="(add-transactions)"  options={{ headerShown: false, }} /> */}
-      </Stack>
+    <Stack >
+      <Stack.Screen name="(tabs)"  options={{ headerShown: false, }} />
+      <Stack.Screen name="+not-found" />
+      {/* <Stack.Screen name="(add-transactions)"  options={{ headerShown: false, }} /> */}
+    </Stack>
     </ThemeProvider>
     <Toast/>
     </Provider>

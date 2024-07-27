@@ -4,6 +4,7 @@ import CustomInput from '../../common/CustomInput'
 import { Ionicons } from '@expo/vector-icons'
 import { Image } from 'react-native'
 import { categoryIcons } from '@/constants/CategoriesIconsVector'
+import { categoriesJSON } from '@/constants/Categories'
 
 const AddBudgetCard = ({category, removeHandler, setSelectedCategories, selectedCategories}) => {
     const handleChange = (e)=>{
@@ -17,7 +18,7 @@ const AddBudgetCard = ({category, removeHandler, setSelectedCategories, selected
             <View className='flex-row justify-between'>
                 <View className='flex-row  bg-white gap-1'>
                     <Image className='h-5 w-5' source={categoryIcons[category?.category]} />
-                    <Text className='text-base font-psemibold'>{category?.category}</Text>
+                    <Text className='text-base font-psemibold'>{categoriesJSON[category?.category]}</Text>
                 </View>
                 <Ionicons onPress={() => removeHandler(category?.category)} size={18} name='close' />
             </View>

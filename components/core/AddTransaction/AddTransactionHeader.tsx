@@ -8,7 +8,7 @@ const AddTransactionHeader = () => {
     <View className='flex-row justify-between items-center'>
         <Ionicons name='arrow-back' onPress={()=>router.back()} />
       <Text>AddTransactionHeader</Text>
-        <Ionicons name='add'onPress={()=>router.push("add-transactions/")} />
+        <Ionicons name='add'onPress={()=>router.push("add-expense/")} />
     </View>
   )
 }

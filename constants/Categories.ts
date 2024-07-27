@@ -17,25 +17,46 @@ import Miscellaneous from '@/assets/icons/categories-icons/Miscellaneous.png';
 import Icons from './Icons';
 
 const categories = [
-    "Housing",
-    'Utilities',
-    'Food',
-    'Transportation',
-    'Healthcare',
-    'Insurance',
-    'Entertainment',
-    'Recreation',
-    'Travel',
-    'Shopping',
-    'Debt Payments',
-    'Savings & Investments',
-    'Family',
-    'Gifts & Donations',
-    'Personal Care',
-    'Miscellaneous',
-    'Income'
+    "HOUSING",
+    "UTILITIES",
+    "FOOD",
+    "TRANSPORTATION",
+    "HEALTHCARE",
+    "INSURANCE",
+    "ENTERTAINMENT",
+    "RECREATION",
+    "TRAVEL",
+    "SHOPPING",
+    "DEBT_PAYMENTS",
+    "SAVINGS_AND_INVESTMENTS",
+    "FAMILY",
+    "GIFTS_AND_DONATIONS",
+    "PERSONAL_CARE",
+    "MISCELLANEOUS",
+    "INCOME"
 ]
 
+const categoriesJSON = {
+    "HOUSING": "Housing",
+    "UTILITIES": "Utilities",
+    "FOOD": "Food",
+    "TRANSPORTATION": "Transportation",
+    "HEALTHCARE": "Healthcare",
+    "INSURANCE": "Insurance",
+    "ENTERTAINMENT": "Entertainment",
+    "RECREATION": "Recreation",
+    "TRAVEL": "Travel",
+    "SHOPPING": "Shopping",
+    "DEBT_PAYMENTS": "Debt Payments",
+    "SAVINGS_AND_INVESTMENTS": "Savings & Investments",
+    "FAMILY": "Family",
+    "GIFTS_AND_DONATIONS": "Gifts & Donations",
+    "PERSONAL_CARE": "Personal Care",
+    "MISCELLANEOUS": "Miscellaneous",
+    "INCOME": "Income"
+  }
+
 export {
-    categories
+    categories,
+    categoriesJSON
 }

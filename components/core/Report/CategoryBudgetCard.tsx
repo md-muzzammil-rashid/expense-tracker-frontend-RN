@@ -4,11 +4,13 @@ import ProgressBar from '@/components/common/ProgressBar'
 import TransactionCard from '../Transaction/TransactionCard'
 import ColorPair from '@/utils/ColorPair'
 import { Ionicons } from '@expo/vector-icons'
+import { categoriesJSON } from '@/constants/Categories'
 
 const CategoryBudgetCard = ({category, start, end}) => {
+  // end = parseInt(end)
   return (
     <View className='m-3 bg-white rounded-xl shadow-lg'>
-      <TransactionCard amount={start} secondaryText={`Remaining ${end - start}`} subCategory={category}  category={category}/>
+      <TransactionCard amount={start} secondaryText={`Remaining ${end - start}`} subCategory={categoriesJSON[category]}  category={category}/>
       <ProgressBar start={start} end={end} color={ColorPair[category]?.icon_color}/>
       {
         start>end &&

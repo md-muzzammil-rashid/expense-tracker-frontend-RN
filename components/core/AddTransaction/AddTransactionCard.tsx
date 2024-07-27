@@ -3,10 +3,11 @@ import React, { useEffect, useState } from 'react'
 import { categoryIcons } from '@/constants/CategoriesIconsVector'
 import { Ionicons } from '@expo/vector-icons'
 import CustomInput from '@/components/common/CustomInput'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { removeTransaction, updateTransaction } from '@/redux/Reducers/TransactionSlice'
 import DropDownPicker from 'react-native-dropdown-picker';
 import RNPicker from 'react-native-picker-select'
+import { categoriesJSON } from '@/constants/Categories'
 
 
 const AddTransactionCard = ({transaction}) => {
@@ -17,6 +18,7 @@ const AddTransactionCard = ({transaction}) => {
     const handleDelete = ()=> {
         dispatch(removeTransaction(transaction.transactionId))
     }
+    const wallets = useSelector(state=>state?.wallet)
     useEffect(()=>{
         dispatch(updateTransaction(data))
     },[data])
@@ -28,7 +30,7 @@ const AddTransactionCard = ({transaction}) => {
         <View className='flex-row items-center justify-between'>
             <View className='flex-row items-center gap-1'>
                 <Image className='h-10 w-10' source={categoryIcons[transaction?.category]} />
-                <Text className='font-pbold'>{transaction?.category}</Text>
+                <Text className='font-pbold'>{categoriesJSON[transaction?.category]}</Text>
             </View>
             <TouchableOpacity onPress={handleDelete} className='bg-gray-300 p-1 rounded-full'>
                 <Ionicons name='close' size={20} color={'white'}/>
@@ -49,8 +51,8 @@ const AddTransactionCard = ({transaction}) => {
 
             <RNPicker
                 onValueChange={(e)=>setData(prev=>({...prev, walletId:e}))}
-                value={data?.wallet && data.wallet}
-                items={[{label: "PayTm", value: "wallet1"}, {label: "GPay" , value: "wallet2"}]}
+                value={data?.walletId && data.walletId}
+                items={wallets.map(wallet=> ({label:`${wallet.walletName} [${wallet.code}]`, value:wallet.walletId}))}
                 
             />
 

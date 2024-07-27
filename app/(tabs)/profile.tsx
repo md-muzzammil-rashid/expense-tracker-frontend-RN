@@ -7,10 +7,19 @@ import ProfileOptionCard from '@/components/core/profile/ProfileOptionCard'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { StatusBar } from 'expo-status-bar'
 import CustomModal from '@/components/common/CustomModal'
-import Logout from '@/components/core/profile/Logout'
+import Logout from '@/components/common/ModalYesNo'
+import { logoutUserAPI } from '@/Services/Operations/AuthAPI'
+import { router } from 'expo-router'
 
 const Profile = () => {
   const [logoutVisible, setLogoutVisible] = useState(false)
+  const handleLogout = async () => {
+    setLogoutVisible(false)
+    await logoutUserAPI();
+    // router.dismissAll()
+
+    router.push("(auth)/")
+  }
   return (
     <SafeAreaView className='bg-primary'>
 
@@ -38,7 +47,12 @@ const Profile = () => {
           </TouchableOpacity>
         </View>
         <CustomModal visible={logoutVisible}>
-          <Logout setVisible={setLogoutVisible} />
+          <Logout 
+            text2='Are you sure do you want to Logout?' 
+            text1='Logout?'
+            onReject={()=>setLogoutVisible(false)}
+            onAccept={handleLogout}
+          />
         </CustomModal>
     <StatusBar style='dark'/>
 

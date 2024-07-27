@@ -2,10 +2,12 @@ import { View, Text, TouchableOpacity, SafeAreaView } from 'react-native'
 import React from 'react'
 import TransactionCard from '../Transaction/TransactionCard'
 import { router } from 'expo-router'
-import { transactionData } from '@/utils/DummyApiData'
 import { DrawerLayout, DrawerLayoutAndroid, FlatList, GestureHandlerRootView, NativeViewGestureHandler } from 'react-native-gesture-handler'
+import { useSelector } from 'react-redux'
+
 
 const Transaction = () => {
+  const transactionData = useSelector(state=>state?.transaction?.monthlyTransactions)
   return (
     <SafeAreaView>
       <View className='p-2 px-5'>
@@ -17,7 +19,7 @@ const Transaction = () => {
             </TouchableOpacity>
           </View>
         </View>
-          {transactionData.slice(0, 5).map(item => <TransactionCard amount={item.amount} subCategory={item.subcategory} category={item.category} type={item.type} />)
+          {transactionData.slice(0, 5).map(item => <TransactionCard key={item.transactionId} amount={item.amount} subCategory={item.description} category={item.category} secondaryText={item?.date} type={item.type} />)
           }
       </View>
     </SafeAreaView>

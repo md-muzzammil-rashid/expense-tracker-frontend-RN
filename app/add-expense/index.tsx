@@ -1,5 +1,5 @@
 import { View, Text, ScrollView, TouchableOpacity, SafeAreaView } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CategoryCard from '@/components/core/AddTransaction/CategoryCard'
 import { categories } from '@/constants/Categories'
 import { Calendar, CalendarList, CalendarProvider, ExpandableCalendar, WeekCalendar } from 'react-native-calendars'
@@ -12,10 +12,9 @@ import { v4 as uuid, } from 'uuid'
 import 'react-native-get-random-values'
 
 const SelectCategory = () => {
-    const [date, setDate] = useState(String(new Date().toLocaleDateString()));
-    const currentDate = date.split('/')[2]+'-'+date.split('/')[1]+"-"+date.split('/')[0]
+
     const dispatch = useDispatch()
-    const [metaData, setMetaData] = useState({category:"", date:currentDate, transactionId: uuid(), walletId:"", type:"EXPENSE", amount:null, description:""})
+    const [metaData, setMetaData] = useState({category:"", date:new Date().toISOString().split("T")[0], transactionId: uuid(), walletId:"", type:"EXPENSE", amount:null, description:""})
     
     const handlePress = () => {
         if(metaData.category==''){
@@ -26,12 +25,13 @@ const SelectCategory = () => {
             return
         }
         dispatch(addTransaction(metaData))
-        router.push('add-transactions/add')
+        router.push('add-expense/add')
     }
+
   return (
     <SafeAreaView className='relative justify-between h-screen'>
         <ScrollView>
-        <CalendarProvider date={currentDate}>
+        <CalendarProvider date={metaData.date}>
             <ExpandableCalendar 
             onDayPress={e=>setMetaData(p=>({...p, date:e.dateString}))}
             closeOnDayPress={true} />

@@ -9,16 +9,19 @@ import AddBudgetCard from '@/components/core/budget/AddBudgetCard'
 import BudgetCategorySelectCard from '@/components/core/budget/BudgetCategorySelectCard'
 import CustomButton from '@/components/common/CustomButton'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import Toast from 'react-native-toast-message'
+import { updateBudgetAPI } from '@/Services/Operations/BudgetAPI'
+import { useSelector } from 'react-redux'
 
 const AddBudget = () => {
-    const [expenseCategories, setExpenseCategories] = useState(categories.filter(c=>c!="Income"))
-    const [selectedCategories, setSelectedCategories] = useState([{category:"Travel", amount:5000}, {category:"Entertainment", amount:8000}])
+    const {budget} = useSelector(state=>state?.user)
+    const [expenseCategories, setExpenseCategories] = useState(categories.filter(c=>c!="INCOME"))
+    const [selectedCategories, setSelectedCategories] = useState(budget)
     const onSelectCategory = (category) =>
         {
             // console.log(category);
             setExpenseCategories(prev=>prev.filter(cat => cat!=category))
             setSelectedCategories(prev=>([...prev, {category:category ,amount:null}]))
-            console.log(selectedCategories);
             
         }
     const removeHandler = (category) => {
@@ -26,6 +29,22 @@ const AddBudget = () => {
         setExpenseCategories(prev=>([...prev, category]))
         console.log(selectedCategories);
     }
+
+    const handleSubmit = async () => {
+        selectedCategories.forEach(cat=>{
+            if(!cat.amount){
+                Toast.show({
+                    text1: 'Please enter Amount',
+                    type:'error'
+                })
+                return
+            }
+        })
+            // console.log(JSON.stringify(selectedCategories));
+            const res = await updateBudgetAPI(selectedCategories);
+            console.log(res);
+    }
+
     useEffect(()=>{
         selectedCategories.forEach(cat =>
             setExpenseCategories(prev=>prev.filter(p => p!=cat?.category))
@@ -48,7 +67,7 @@ const AddBudget = () => {
             ListFooterComponent={    
                 selectedCategories.length > 0 &&
                 <View className='px-3'>
-                    <CustomButton title='Submit'/>
+                    <CustomButton pressFunction={handleSubmit} title='Submit'/>
                 </View>
             }
         />
